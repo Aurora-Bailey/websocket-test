@@ -1,4 +1,5 @@
 import state from './state'
+import Schema from '../Schema.js'
 
 var ws = {}
 var sendQueue = []
@@ -25,12 +26,13 @@ function start () {
     state.socket.alive = false
   }
 
-  ws.onmessage = (e) => {
-    if (typeof e.data === 'string') {
-      receiveObj(JSON.parse(e.data))
+  ws.onmessage = (message) => {
+    let data = message.data
+    if (typeof data === 'string') {
+      receiveObj(JSON.parse(data))
     } else {
-      // var buf = new Buffer(e.data, 'binary')
-      // receiveObj(Schema.unpack(buf))
+      var buf = new Buffer(data, 'binary')
+      receiveObj(Schema.unpack(buf))
     }
   }
 }
