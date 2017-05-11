@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const Schema = require('../Schema.js')
 
 const wss = new WebSocket.Server({ port: 8000 });
 
