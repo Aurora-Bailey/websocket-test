@@ -17,7 +17,7 @@ const type = {};
 type.ping = avro.Type.forSchema({
   type: 'record',
   fields: [
-    {name: 'v',type: 'int'}
+    {name: 'v',type: 'long'}
   ]
 });
 type.mouse = avro.Type.forSchema({

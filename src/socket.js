@@ -66,8 +66,10 @@ function sendBinary (binary) {
 }
 
 function receiveObj (obj) {
+  console.log(obj)
   if (obj.s === 'ping') {
     state.game.ping = Date.now() - obj.v
+    console.log('obj')
   }
   if (obj.s === 'mouse') {
     state.remote.square.x = obj.x
