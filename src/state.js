@@ -13,6 +13,7 @@ state.game.fps = 120
 state.game.polling = 480 //per second
 state.game.speed = 150
 state.game.frame = 0
+state.game.ping = 0
 
 state.local = {}
 state.local.circle = {

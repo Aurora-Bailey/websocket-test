@@ -5,6 +5,7 @@
       <button @click="fps()">fps {{$root.state.game.fps}}</button>
       <button @click="pollingRate()">polling {{$root.state.game.polling}}/s</button>
       <button @click="resetFrame()">reset frame</button>
+      <button @click="ping()">ping {{$root.state.game.ping}}</button>
     </div>
     <div class="square" :style="{ top: $root.state.local.square.y + 'px', left: $root.state.local.square.x + 'px'}"></div>
     <div class="circle" :style="{ top: $root.state.local.circle.y + 'px', left: $root.state.local.circle.x + 'px'}"></div>
@@ -34,6 +35,9 @@ export default {
     resetFrame () {
       this.$root.state.game.frame = 0
       socket.sendObj({s: 'frame', v: 0})
+    },
+    ping () {
+      socket.sendObj({s: 'ping', v: Date.now()})
     },
     pollingRate () {
       this.$root.state.game.polling /= 2

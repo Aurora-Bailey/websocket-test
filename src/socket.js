@@ -9,7 +9,7 @@ function start () {
   console.log('Start WebSocket')
   if (state.socket.alive) return false // Already connected
 
-  ws = new window.WebSocket('ws://localhost:8000')
+  ws = new window.WebSocket('ws://54.224.146.148/')
   ws.binaryType = 'arraybuffer'
 
   ws.onopen = () => {
@@ -66,6 +66,9 @@ function sendBinary (binary) {
 }
 
 function receiveObj (obj) {
+  if (obj.s === 'ping') {
+    state.game.ping = Date.now() - obj.v
+  }
   if (obj.s === 'mouse') {
     state.remote.square.x = obj.x
     state.remote.square.y = obj.y - 58

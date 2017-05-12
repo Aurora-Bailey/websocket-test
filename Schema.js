@@ -14,6 +14,12 @@ module.exports.unpack = function (buf) {
 
 
 const type = {};
+type.ping = avro.Type.forSchema({
+  type: 'record',
+  fields: [
+    {name: 'v',type: 'int'}
+  ]
+});
 type.mouse = avro.Type.forSchema({
   type: 'record',
   fields: [

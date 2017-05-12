@@ -82,6 +82,10 @@ function receiveObj (ws, obj) {
     sendBinary(ws, Schema.pack(obj))
     return true
   }
+  if (obj.s === 'ping') {
+    sendBinary(ws, Schema.pack(obj))
+    return true
+  }
   if (obj.s === 'speed') {
     speed = obj.v
   }
