@@ -21,6 +21,13 @@ type.mouse = avro.Type.forSchema({
     {name: 'y',type: 'int'}
   ]
 });
+type.circle = avro.Type.forSchema({
+  type: 'record',
+  fields: [
+    {name: 'x',type: 'int'},
+    {name: 'y',type: 'int'}
+  ]
+});
 
 const wrapper = avro.Type.forSchema({
   type: 'record',

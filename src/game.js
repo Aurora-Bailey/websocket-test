@@ -1,15 +1,16 @@
 import state from './state'
-let frame = 0
 
 function GameLoop () {
   setTimeout(() => {GameLoop()}, 1000 / 120)
 
-  if (frame % (120 /state.game.fps) === 0) {
-    state.game.circle.x = Math.cos(frame / state.game.circle.speed) * 100 + 150
-    state.game.circle.y = Math.sin(frame / state.game.circle.speed) * 100 + 150
+  if (state.game.frame % (120 /state.game.fps) === 0) {
+    state.local.circle.x = Math.cos(state.game.frame / state.game.speed) * 100 + 150
+    state.local.circle.y = Math.sin(state.game.frame / state.game.speed) * 100 + 150
+
+    state.local.square.x = state.input.mouse.x - 58
+    state.local.square.y = state.input.mouse.y
   }
 
-
-  frame++
+  state.game.frame++
 }
 GameLoop()

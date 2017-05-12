@@ -15,15 +15,11 @@ function start () {
   ws.onopen = () => {
     state.socket.alive = true
 
-    sendObj({a: 'hi'})
+    sendObj({s: 'hi'})
 
     sendQueue.forEach((e, i) => {
       sendObj(e)
     })
-  }
-
-  ws.onclose = () => {
-    state.socket.alive = false
   }
 
   ws.onmessage = (message) => {
@@ -34,6 +30,10 @@ function start () {
       var buf = new Buffer(data, 'binary')
       receiveObj(Schema.unpack(buf))
     }
+  }
+
+  ws.onclose = () => {
+    state.socket.alive = false
   }
 }
 
@@ -66,6 +66,16 @@ function sendBinary (binary) {
 }
 
 function receiveObj (obj) {
+  if (obj.s === 'mouse') {
+    state.remote.square.x = obj.x
+    state.remote.square.y = obj.y - 58
+    return true
+  }
+  if (obj.s === 'circle') {
+    state.remote.circle.x = obj.x
+    state.remote.circle.y = obj.y
+    return true
+  }
   console.log(obj)
 }
 

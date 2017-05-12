@@ -3,6 +3,28 @@ const Schema = require('../Schema.js')
 
 const wss = new WebSocket.Server({ port: 8000 })
 
+
+let frame = 0
+let circle = {x: 0, y: 0}
+let speed = 150
+let fps = 120
+
+function GameLoop () {
+  setTimeout(() => {GameLoop()}, 1000 / 120)
+
+  if (frame % (120 / fps) === 0) {
+    circle.x = Math.cos(frame / speed) * 100 + 350
+    circle.y = Math.sin(frame / speed) * 100 + 150
+    wss.clients.forEach((ws) => {
+      sendBinary(ws, Schema.pack({s: 'circle', x: parseInt(circle.x), y: parseInt(circle.y)}))
+    });
+  }
+
+  frame++
+}
+GameLoop()
+
+
 wss.on('connection', (ws) => {
   ws.on('error', (err) => {
     console.log('Bad connection!')
@@ -26,7 +48,7 @@ wss.on('connection', (ws) => {
   })
 
   console.log('Connection open')
-  ws.send(JSON.stringify({a: 'something'}))
+  ws.send(JSON.stringify({s: 'hi'}))
 });
 
 function broadcast (obj) {
@@ -58,6 +80,16 @@ function sendBinary (ws, data) {
 function receiveObj (ws, obj) {
   if (obj.s === 'mouse') {
     sendBinary(ws, Schema.pack(obj))
+    return true
+  }
+  if (obj.s === 'speed') {
+    speed = obj.v
+  }
+  if (obj.s === 'fps') {
+    fps = obj.v
+  }
+  if (obj.s === 'frame') {
+    frame = obj.v
   }
   console.log(obj)
 }
